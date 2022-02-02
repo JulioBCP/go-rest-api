@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
+
+	"github.com/JulioBCP/go-rest-api/database"
+	"github.com/JulioBCP/go-rest-api/models"
+	"github.com/JulioBCP/go-rest-api/routes"
 )
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Home page")
-}
-
-func HandleRequest() {
-	http.HandleFunc("/", Home)
-	log.Fatal(http.ListenAndServe(":8000", nil))
-}
-
 func main() {
+
+	models.Personalidades = []models.Personalidade{
+		{ID: 1, Nome: "Nome 1", Historia: "Historia 1"},
+		{ID: 2, Nome: "Nome 2", Historia: "Historia 2"},
+	}
+
+	database.ConectaComBancoDeDados()
+
 	fmt.Println("Iniciando o servidor Rest com Go")
-	HandleRequest()
+	routes.HandleRequest()
 }
